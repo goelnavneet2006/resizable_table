@@ -1,0 +1,137 @@
+<table id="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th class="firstRow">Column1</th>
+      <th class="firstRow">Column2</th>
+      <th class="firstRow">Column3</th>
+      <th class="firstRow">Column4</th>
+      <th class="firstRow">Column5</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class="firstCol">Row1</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="firstCol">Row2</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="firstCol">Row3</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="firstCol">Row4</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="firstCol">Row5</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+
+  var startOfCell;
+  var targetEle;
+
+  function mouseDown(event) {
+    targetEle = event.target;
+    if (targetEle.classList.contains("firstRow")) {
+      var pageX = event.pageX;
+      var cellWidth = targetEle.offsetWidth;
+      startOfCell = pageX - cellWidth;
+    } else if (targetEle.classList.contains("firstCol")) {
+      var pageY = event.pageY;
+      var cellHeight = targetEle.offsetHeight;
+      startOfCell = pageY - cellHeight;
+    }
+  }
+
+  function mouseMove(event) {
+    // var targetEle = event.target;
+    // console.log(targetEle);
+    if (targetEle) {
+      if (targetEle.classList.contains("firstRow")) {
+      targetEle.style.width = event.pageX - startOfCell + "px";
+      } else if (targetEle.classList.contains("firstCol")) {
+        targetEle.style.height = event.pageY - startOfCell + "px";
+      }
+    }
+  }
+
+  function mouseUp(event) {
+    console.log("tes")
+    targetEle = undefined;
+  }
+
+
+  document.getElementById("table").addEventListener("mousedown", mouseDown);
+  document.addEventListener("mousemove", mouseMove);
+  document.addEventListener("mouseup", mouseUp);
+
+</script>
+
+<style>
+
+  body {
+    user-select: none;
+  }
+
+  .firstRow:hover::after {
+    content: "";
+    width: 4px;
+    position: absolute;
+    background: rgb(127, 91, 161);
+    right: 0;
+    top: 0;
+    height: 100%;
+    cursor: col-resize;
+  }
+
+  .firstCol:hover::after {
+    content: "";
+    height: 4px;
+    position: absolute;
+    background: rgb(127, 91, 161);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    cursor: row-resize;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid #6f0505;
+  }
+  th, td {
+    padding: 5px;
+    position: relative;
+  }
+</style>
